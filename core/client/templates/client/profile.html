@@ -1,0 +1,28 @@
+{% extends 'client/base.html' %}
+
+{% block content %}
+<div class="profile-page">
+    <aside class="left-side">
+        <h2>Your Telegram ID</h2>
+        <p>Current Telegram ID: {{ user.client.telegram_id }}</p>
+        <form method="post" action="{% url 'profile' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Save Telegram ID</button>
+        </form>
+    </aside>
+    
+    <section class="right-side">
+        <h2>Application Results</h2>
+        {% for result in results %}
+        <div class="result-card">
+            <h3>Result #{{ result.id }}</h3>
+            <pre>Result details:
+                URL: {{result.url}}
+                Created_at: {{result.created_at}}
+            </pre>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}

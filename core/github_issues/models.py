@@ -19,3 +19,4 @@ class Repository(models.Model):
     class Meta:
         verbose_name = "Repository"
         verbose_name_plural = "Repositories"
+
