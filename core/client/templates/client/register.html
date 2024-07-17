@@ -1,0 +1,15 @@
+{% extends "client/base.html" %}
+
+
+{% block content %}
+  <h1>Welcome to the Register</h1>
+  {% if user.is_authenticated %}
+    <p>Hello, {{ user.username }}. You are logged in.</p>
+  {% else %}
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+  {% endif %}
+{% endblock %}

@@ -60,22 +60,34 @@ footer {
 .btn {
     background-color: #66fcf1;
     color: #1f2833;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition: background-color 0.3s;
 }
+
 
 .btn:hover {
     background-color: #45a29e;
 }
 
+.profile-btn {
+    margin: 5px;
+}
+.logout-btn {
+    margin: 5px;
+}
+
 .authbtn {
     margin-right: 10px;
     margin-left: 10px;
-    background-color: #f37228;
+    background-color: #66fcf1;
     color: #1f2833;
-    padding: 10px 20px;
+    padding:  5px 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;

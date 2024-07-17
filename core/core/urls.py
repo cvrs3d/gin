@@ -20,8 +20,9 @@ from client import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('/register', RegisterView.as_view(), 'register'),
-    # path('/login', GinLoginView.as_view(), 'login'),
-    # path('/logout', GinLogoutView.as_view(), 'logout'),
+    path('register/', views.RegisterView.as_view(), name='register'),
+    path('login/', views.GinLoginView.as_view(), name='login'),
+    path('logout/', views.GinLogoutView.as_view(), name='logout'),
+    path('profile/', views.GinProfileView.as_view(), name='profile'),
     path('', views.IndexView.as_view(), name='index')
 ]

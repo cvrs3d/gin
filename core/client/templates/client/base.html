@@ -11,7 +11,7 @@
 <header>
     GitHub Issue Notifier
     <nav>
-        <a href="#">Home</a>
+        <a href="{% url 'index' %}">Home</a>
         {% if user.is_authenticated %}
         <a href="#">Repositories</a>
         {% endif %}
@@ -23,13 +23,25 @@
 
 <aside class="card">
     <div class="auth">
-    {% if user.is_authenticated %}
-    <a href="#" class="authbtn">Profile</a>
-    <a href="#" class="btn">Logout</a>
-    {% else %}
-    <a href="#" class="authbtn">Login</a>
-    <a href="#" class="btn">Register</a>
-    {% endif %}
+        {% if user.is_authenticated %}
+        <form action="{% url 'profile' %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <input type="submit" value="Profile" class="btn profile-btn">
+        </form>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <input type="submit" value="Logout" class="btn logout-btn">
+        </form>
+        {% else %}
+        <form action="{% url 'login' %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <input type="submit" value="Login" class="btn logout-btn">
+        </form>
+        <form action="{% url 'register' %}" method="get" style="display: inline;">
+            {% csrf_token %}
+            <input type="submit" value="Register" class="btn logout-btn">
+        </form>
+        {% endif %}
     </div>
 </aside>
 
