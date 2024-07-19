@@ -3,4 +3,7 @@ from .models import Repository
 
 
 class RepositoryForm(Form):
-    pass
+
+    class Meta:
+        model = Repository
+        fields = ['name', 'url', 'issue']

@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from client import views
+from github_issues.views import GinRepositoryView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +25,6 @@ urlpatterns = [
     path('login/', views.GinLoginView.as_view(), name='login'),
     path('logout/', views.GinLogoutView.as_view(), name='logout'),
     path('profile/', views.GinProfileView.as_view(), name='profile'),
+    path('issues/', GinRepositoryView.as_view(), name='issues'),
     path('', views.IndexView.as_view(), name='index')
 ]

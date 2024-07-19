@@ -1,4 +1,4 @@
-{% extends 'core/base.html' %}
+{% extends 'github_issues/base.html' %}
 
 {% block title %}User Repositories - GitHub Issue Notifier{% endblock %}
 
@@ -10,13 +10,14 @@
         {% for repo in repositories %}
         <div class="card repo-item">
             <h3>{{ repo.name }}</h3>
-            <p>{{ repo.description }}</p>
+            <p>On url: {{ repo.url }}</p>
+            <p>Looking for: {{ repo.get_issue_display }}</p>
             <div class="repo-actions">
-                <form method="POST" action="{% url 'edit_repository' repo.id %}" style="display: inline;">
+                <form method="POST" action="#" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-edit">Edit</button>
                 </form>
-                <form method="POST" action="{% url 'delete_repository' repo.id %}" style="display: inline;">
+                <form method="DELETE" action="#" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-delete">Delete</button>
                 </form>
@@ -26,10 +27,8 @@
     </div>
 
     <div class="action-buttons">
-        <a href="{% url 'add_repository' %}" class="btn btn-add">Add More</a>
-        <a href="{% url 'start_search' %}" class="btn btn-search">Start Search</a>
+        <a href="#" class="btn btn-add">Add More</a>
+        <a href="#" class="btn btn-search">Start Search</a>
     </div>
 </div>
-{% endblock %}
-
 {% endblock %}
