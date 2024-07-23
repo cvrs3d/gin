@@ -127,3 +127,5 @@ ISSUE_CHOICES = {
     "1": "first-good-issue",
     "2": "Cost-small",
 }
+
+AUTH_TOKEN = os.environ.get('AUTH_GIT')
