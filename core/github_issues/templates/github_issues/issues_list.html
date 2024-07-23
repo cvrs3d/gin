@@ -13,11 +13,11 @@
             <p>On url: {{ repo.url }}</p>
             <p>Looking for: {{ repo.get_issue_display }}</p>
             <div class="repo-actions">
-                <form method="POST" action="#" style="display: inline;">
+                <form method="GET" action="{% url 'update' pk=repo.pk %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-edit">Edit</button>
                 </form>
-                <form method="DELETE" action="#" style="display: inline;">
+                <form method="POST" action="{% url 'delete' pk=repo.pk %}" style="display: inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-delete">Delete</button>
                 </form>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="action-buttons">
-        <a href="#" class="btn btn-add">Add More</a>
+        <a href="{% url 'add' %}" class="btn btn-add">Add More</a>
         <a href="#" class="btn btn-search">Start Search</a>
     </div>
 </div>

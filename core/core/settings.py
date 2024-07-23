@@ -125,4 +125,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ISSUE_CHOICES = {
     "1": "first-good-issue",
+    "2": "Cost-small",
 }
