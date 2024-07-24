@@ -129,3 +129,5 @@ ISSUE_CHOICES = {
 }
 
 AUTH_TOKEN = os.environ.get('AUTH_GIT')
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'

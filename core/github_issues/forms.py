@@ -1,9 +1,14 @@
-from django.forms import Form
-from .models import Repository
+from django import forms
+from .models import Repository, Label
 
 
-class RepositoryForm(Form):
-
+class RepositoryForm(forms.ModelForm):
     class Meta:
         model = Repository
-        fields = ['name', 'url', 'issue']
+        fields = ['name', 'url', 'owner']
+
+
+class LabelForm(forms.ModelForm):
+    class Meta:
+        model = Label
+        fields = ['name', 'color']
