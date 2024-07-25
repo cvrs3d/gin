@@ -1,0 +1,31 @@
+{% extends 'github_issues/base.html' %}
+
+{% block title %}Search Issues - GitHub Issue Notifier{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Search Issues</h2>
+    <form method="POST" action="{% url 'search_issues' %}">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="repo_id">Repository:</label>
+            <select id="repo_id" name="repo_id" class="form-control">
+                {% for repo in repositories %}
+                    <option value="{{ repo.id }}">{{ repo.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="labels">Labels:</label>
+            <select id="labels" name="labels" class="form-control" multiple>
+                {% for repo in repositories %}
+                    {% for label in repo.labels.all %}
+                        <option value="{{ label.name }}">{{ label.name }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-search">Search</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'github_issues/base.html' %}
+
+{% block title %}Add New Repository - GitHub Issue Notifier{% endblock %}
+
+{% block content %}
+
+<div class="repo-actions">
+    <form method="POST" action="{% url 'add' %}" style="display: inline;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-delete">Add</button>
+    </form>
+</div>
+
+{% endblock %}

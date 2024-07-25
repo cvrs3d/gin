@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.9-alpine3.16
 LABEL authors="ev.ustinov03@gmail.com"
 
 COPY requirements.txt /temp/requirements.txt

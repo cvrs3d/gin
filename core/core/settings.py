@@ -131,3 +131,10 @@ ISSUE_CHOICES = {
 AUTH_TOKEN = os.environ.get('AUTH_GIT')
 
 CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+# # CELERY_ACCEPT_CONTENT = ['json']
+# # CELERY_TASK_SERIALIZER = 'json'
+# # CELERY_RESULT_SERIALIZER = 'json'
+
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = 'issues/'

@@ -1,13 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from tasks import fetch_labels_task, search_issues_task
+from .tasks import fetch_labels_task, search_issues_task, add
 from .forms import RepositoryForm
 from .models import Repository
 
@@ -18,9 +18,10 @@ class GinRepositoryView(ListView):
     template_name = 'github_issues/issues_list.html'
     model = Repository
 
-    def get_queryset(self):
-        queryset = Repository.objects.filter(user=self.request.user).select_related('user')
-        return queryset
+    def get(self, request, *args, **kwargs):
+        queryset = Repository.objects.filter(user=request.user).select_related('user')
+        context = {'repositories': queryset}
+        return render(request, self.template_name, context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -28,13 +29,17 @@ class GinAddNewRepo(CreateView):
     model = Repository
     form_class = RepositoryForm
     template_name = 'github_issues/create_repo.html'
-    success_url = '/issues/'
+    success_url = reverse_lazy('issues')
 
-    def form_valid(self, form):
-        form.instance.user = self.request.user
-        response = super().form_valid(form)
-        fetch_labels_task.delay(self.object.id)
-        return response
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            repository = form.save(commit=False)
+            repository.user = request.user
+            repository.save()
+            repo_id = repository.pk
+            fetch_labels_task.delay(repo_id)
+        return redirect(self.success_url)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -68,6 +73,6 @@ class SearchIssueView(View):
 
     def post(self, request):
         repo_id = request.POST.get('repo_id')
-        labels = request.POST.get('labels')
+        labels = request.POST.getlist('labels')
         search_issues_task.delay(repo_id, labels)
         return JsonResponse({'status': '900 - search started'})
