@@ -13,19 +13,29 @@ logger = logging.getLogger(__name__)
 
 @shared_task
 def add(x, y):
-    print( x + y)
+    print(x + y)
+
 
 @shared_task()
 def fetch_labels_task(repository_id):
     repository = Repository.objects.get(id=repository_id)
-
+    params = {
+        'page': 1,
+    }
     url = f"https://api.github.com/repos/{repository.owner}/{repository.name}/labels"
+    labels = []
+    response = requests.get(url, headers={'Authorization': f'Bearer {settings.AUTH_TOKEN}'}, params=params)
 
-    response = requests.get(url, headers={'Authorization': f'Bearer {settings.AUTH_TOKEN}'})
-
-    labels = response.json() if response.status_code == 200 else []
+    while response.status_code == 200:
+        new = response.json()
+        if not new:
+            break
+        labels.extend(new)
+        params['page'] += 1
+        response = requests.get(url, headers={'Authorization': f'Bearer {settings.AUTH_TOKEN}'}, params=params)
 
     for label in labels:
+        print(label['name'])
         Label.objects.update_or_create(
             repository=repository,
             name=label['name'],
