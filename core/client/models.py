@@ -1,3 +1,5 @@
+import datetime
+
 import django.contrib.auth.models
 from django.db import models
 from django.contrib.auth.models import User
@@ -21,7 +23,11 @@ class Client(models.Model):
 class Result(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    url = models.URLField(max_length=255)
+    objects = models.Manager()
+    html_url = models.URLField(max_length=255)
+    title = models.CharField(max_length=255, default='Issue')
+    labels = models.CharField(max_length=255, default='Labels')
+    assignees = models.CharField(max_length=255, default='None')
 
     def __str__(self):
         return f"Result for {self.client} created at{self.created_at}"

@@ -18,8 +18,10 @@
         <div class="result-card">
             <h3>Result #{{ result.id }}</h3>
             <pre>Result details:
-                URL: {{result.url}}
+                URL: {{result.html_url}}
                 Created_at: {{result.created_at}}
+                Assignees: {{ result.assignees }}
+                Labels: {{ result.labels }}
             </pre>
         </div>
         {% endfor %}

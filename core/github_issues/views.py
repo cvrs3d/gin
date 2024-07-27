@@ -63,7 +63,7 @@ class GinUpdateRepo(UpdateView):
 
 @method_decorator(login_required, name='dispatch')
 class SearchIssueView(View):
-    template_name = 'github_issues/search_form.html'
+    template_name = 'github_issues/search_issues.html'
 
     def get(self, request):
         repositories = Repository.objects.filter(user=request.user).select_related('user')
@@ -74,5 +74,6 @@ class SearchIssueView(View):
     def post(self, request):
         repo_id = request.POST.get('repo_id')
         labels = request.POST.getlist('labels')
-        search_issues_task.delay(repo_id, labels)
-        return JsonResponse({'status': '900 - search started'})
+        user_id = request.user.id
+        search_issues_task.delay(repo_id, labels, user_id)
+        return redirect('profile')
