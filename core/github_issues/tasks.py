@@ -81,3 +81,4 @@ def search_issues_task(repository_id, labels, user_id):
             labels=labels,
             client=Client.objects.get(user=user),
         )
+

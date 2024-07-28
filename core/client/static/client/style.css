@@ -78,6 +78,7 @@ footer {
 .profile-btn {
     margin: 5px;
 }
+
 .logout-btn {
     margin: 5px;
 }
@@ -87,7 +88,7 @@ footer {
     margin-left: 10px;
     background-color: #66fcf1;
     color: #1f2833;
-    padding:  5px 5px;
+    padding: 5px 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -104,25 +105,49 @@ footer {
 
 .profile-page {
     display: flex;
-    gap: 20px;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-.left-side, .right-side {
-    padding: 20px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    color: #1f2833;
+    justify-content: space-between;
 }
 
 .left-side {
     flex: 1;
-    max-width: 33%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Adjust the gap as needed */
+}
+
+.left-side aside {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Adjust the background color as needed */
 }
 
 .right-side {
     flex: 2;
-    max-width: 67%;
+    padding: 20px;
+}
+
+.result-card {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff; /* Adjust the background color as needed */
+}
+
+.del {
+    background-color: red;
+    color: #1f2833;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    transition: background-color 0.3s;
+}
+
+.del:hover {
+    background-color: indianred;
 }

@@ -9,6 +9,7 @@ from django.views.generic import CreateView, TemplateView
 from .models import Client, Result
 from .forms import RegisterForm, LoginForm, TelegramIdForm
 from django.contrib import messages
+from .tasks import remove_old_results_task
 
 
 # Create your views here.
@@ -42,6 +43,7 @@ class IndexView(TemplateView):
 @method_decorator(login_required, name='dispatch')
 class GinProfileView(View):
     template_name = 'client/profile.html'
+
     def get(self, request):
         form = TelegramIdForm()
         queryset = Result.objects.filter(client=request.user.client).select_related('client')
@@ -49,6 +51,8 @@ class GinProfileView(View):
             'form': form,
             'results': queryset,
         }
+        client_id = request.user.client.pk
+        remove_old_results_task.delay(client_id)
         return render(request, self.template_name, context)
 
     def post(self, request):

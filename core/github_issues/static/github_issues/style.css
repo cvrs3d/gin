@@ -32,24 +32,40 @@ nav a:hover {
     text-decoration: underline;
 }
 
-main {
-    padding: 20px;
+
+
+/* Ensure the main content has enough space */
+main.container {
+    min-height: 80vh; /* Adjust this value as needed */
+    padding-bottom: 60px; /* Space for the footer */
+    box-sizing: border-box; /* Includes padding in height calculation */
 }
 
+/* Ensure the footer is fixed to the bottom */
 footer {
-    background-color: #34495e; /* Вторичный цвет */
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    width: 100%;
+    position: relative;
     bottom: 0;
-    color: #ecf0f1;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background: #f8f9fa; /* Light background color */
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+/* Responsive adjustments for wide lists */
+select.form-control {
+    width: 100%; /* Make dropdown full-width */
+    max-width: 500px; /* Limit max width to avoid stretching too much */
 }
+
+.form-check {
+    margin-bottom: 5px; /* Space between checkboxes */
+}
+
+/* Add a bit of space to ensure the submit button isn't too close to the footer */
+button.btn-primary {
+    margin-top: 20px; /* Adjust this value as needed */
+}
+
 
 .card {
     background-color: #1f2833;
