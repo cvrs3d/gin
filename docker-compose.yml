@@ -19,7 +19,7 @@ services:
 
 
   database:
-    image: postgres:14.6
+    image: postgres:16.3
     ports:
       - "5432:5432"
     environment:
@@ -31,43 +31,40 @@ services:
 
 
 
-#  redis:
-#    image: redis:7.0.5-alpine
-#    hostname: redis
-#
-#  worker:
-#    build:
-#      context: .
-#    hostname: worker
-#    entrypoint: celery
-#    command: -A celery_app.app worker --loglevel=info
-#    volumes:
-#      - ./core:/core
-#    links:
-#      - redis
-#    depends_on:
-#      - database
-#      - redis
-#    environment:
-#      - DB_HOST=database
-#      - DB_NAME=dbname
-#      - DB_USER=dbuser
-#      - DB_PASS=pass
-#
-#  flower:
-#    build:
-#      context: .
-#    hostname: flower
-#    entrypoint: celery
-#    command: -A celery_app.app flower
-#    volumes:
-#      - ./core:/core
-#    links:
-#      - redis
-#    depends_on:
-#      - redis
-#    ports:
-#      - "5555:5555"
+  redis:
+    image: redis:7.0.5-alpine
+    hostname: redis
+
+  worker:
+    build:
+      context: .
+    hostname: worker
+    entrypoint: celery
+    command: -A core.celery_app.app worker --loglevel=info
+    volumes:
+      - ./core:/core
+    links:
+      - redis
+    depends_on:
+      - database
+      - redis
+    env_file:
+      - .env
+
+  flower:
+    build:
+      context: .
+    hostname: flower
+    entrypoint: celery
+    command: -A core.celery_app.app flower
+    volumes:
+      - ./core:/core
+    links:
+      - redis
+    depends_on:
+      - redis
+    ports:
+      - "5555:5555"
 
 volumes:
   pgdata:
