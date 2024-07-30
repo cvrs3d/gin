@@ -1,0 +1,42 @@
+{% extends 'client/base.html' %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="left-side" >
+        <aside class="telegram-id">
+            <h2>Your Telegram ID</h2>
+            <p>Current Telegram ID: {{ user.client.telegram_id }}</p>
+            <form method="post" action="{% url 'profile' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn">Save Telegram ID</button>
+            </form>
+        </aside>
+        <aside class="tips">
+            <h2>Tips:</h2>
+            <p>Results stay in reach <strong>ONLY</strong> for 1 hour</p>
+            <p>If you keep seeing old results, please refresh the page</p>
+            <p>Or press the button below</p>
+            <form method="get" action="{% url 'profile' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">Delete results</button>
+            </form>
+        </aside>
+    </div>
+
+    <section class="right-side">
+        <h2>Application Results</h2>
+        {% for result in results %}
+        <div class="result-card">
+            <h3>Result #{{ result.id }}</h3>
+            <pre>Result details:
+                URL: {{result.html_url}}
+                Created_at: {{result.created_at}}
+                Assignees: {{ result.assignees }}
+                Labels: {{ result.labels }}
+            </pre>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+{% endblock %}
