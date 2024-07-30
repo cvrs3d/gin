@@ -27,7 +27,8 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def notify(context: ContextTypes.context, message, chat_id):
     await context.bot.send_message(
         chat_id=chat_id,
-        text=message
+        text=message,
+        parse_mode='HTML'
     )
 
 

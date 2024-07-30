@@ -50,8 +50,8 @@ def search_issues_task(repository_id, labels, user_id):
         'labels': ','.join(labels),
         'page': 1,
     }
-    message = f'Here what I found for you on {repository.owner}\'s {repository.name} repository.\n'
-    message += '----------------------------------------------------------------------------------\n'
+    number = 1
+    message = f'<b>Here what I found for you on {repository.owner}\'s {repository.name} repository:</b>\n'
     response = requests.get(url, headers={'Authorization': f'Bearer {settings.AUTH_TOKEN}'}, params=params)
     issues = []
     while response.status_code == 200:
@@ -79,7 +79,8 @@ def search_issues_task(repository_id, labels, user_id):
             labels=labels,
             client=Client.objects.get(user=user),
         )
-        message += f'{title}: {html_url}'
+        message += f'{number}. <a href="{html_url}">{title}</a>\n'
+        number += 1
 
     client = Client.objects.get(user_id=user_id)
     chat_id = client.telegram_id
