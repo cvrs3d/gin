@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .tasks import fetch_labels_task, search_issues_task, add
+from .tasks import fetch_labels_task, search_issues_task
 from .forms import RepositoryForm
 from .models import Repository
 

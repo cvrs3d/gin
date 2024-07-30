@@ -9,11 +9,8 @@ services:
       - ./core:/core
     depends_on:
       - database
-    environment:
-      - DB_HOST=database
-      - DB_NAME=dbname
-      - DB_USER=dbuser
-      - DB_PASS=pass
+    env_file:
+      - .env
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
 
@@ -61,10 +58,28 @@ services:
       - ./core:/core
     links:
       - redis
+    env_file:
+      - .env
     depends_on:
       - redis
     ports:
       - "5555:5555"
+
+
+  telegram:
+    build:
+      context: .
+    hostname: telegram
+    command: python bot.py
+    volumes:
+      - ./core:/core
+    depends_on:
+      - web-app
+      - redis
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings
 
 volumes:
   pgdata:
